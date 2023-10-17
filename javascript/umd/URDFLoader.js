@@ -26,6 +26,8 @@
 
     var THREE__namespace = /*#__PURE__*/_interopNamespace(THREE);
 
+    const _tempAxis = new THREE.Vector3();
+
     class URDFBase extends THREE.Object3D {
 
         constructor(...args) {
@@ -243,7 +245,8 @@
                     }
 
                     this.position.copy(this.origPosition);
-                    this.position.addScaledVector(this.axis, pos);
+                    _tempAxis.copy(this.axis).applyEuler(this.rotation);
+                    this.position.addScaledVector(_tempAxis, pos);
 
                     if (this.jointValue[0] !== pos) {
 
@@ -647,8 +650,11 @@
                 const robotNodes = [ ...robot.children ];
                 const links = robotNodes.filter(c => c.nodeName.toLowerCase() === 'link');
                 const joints = robotNodes.filter(c => c.nodeName.toLowerCase() === 'joint');
+                const gazebos = robotNodes.filter(c => c.nodeName.toLowerCase() === 'gazebo');
                 const materials = robotNodes.filter(c => c.nodeName.toLowerCase() === 'material');
                 const obj = new URDFRobot();
+
+                console.log('URDFLoader: loaded gazebo elements:', gazebos);
 
                 obj.robotName = robot.getAttribute('name');
                 obj.urdfRobotNode = robot;
@@ -887,7 +893,7 @@
                                 .split(/\s/g)
                                 .map(v => parseFloat(v));
 
-                        material.color.setRGB(rgba[0], rgba[1], rgba[2]).convertSRGBToLinear();
+                        material.color.setRGB(rgba[0], rgba[1], rgba[2]);
                         material.opacity = rgba[3];
                         material.transparent = rgba[3] < 1;
                         material.depthWrite = !material.transparent;
@@ -902,7 +908,7 @@
                             const loader = new THREE__namespace.TextureLoader(manager);
                             const filePath = resolvePath(filename);
                             material.map = loader.load(filePath);
-                            material.map.encoding = THREE__namespace.sRGBEncoding;
+                            material.map.colorSpace = THREE__namespace.SRGBColorSpace;
 
                         }
 

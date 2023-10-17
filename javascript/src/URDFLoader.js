@@ -233,8 +233,11 @@ class URDFLoader {
             const robotNodes = [ ...robot.children ];
             const links = robotNodes.filter(c => c.nodeName.toLowerCase() === 'link');
             const joints = robotNodes.filter(c => c.nodeName.toLowerCase() === 'joint');
+            const gazebos = robotNodes.filter(c => c.nodeName.toLowerCase() === 'gazebo');
             const materials = robotNodes.filter(c => c.nodeName.toLowerCase() === 'material');
             const obj = new URDFRobot();
+
+            console.log('URDFLoader: loaded gazebo elements:', gazebos);
 
             obj.robotName = robot.getAttribute('name');
             obj.urdfRobotNode = robot;

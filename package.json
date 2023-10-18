@@ -19,12 +19,12 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gkjohnson/urdf-loaders.git"
+    "url": "git+https://gitlab.com/skyllatech/jetstream/urdf-loaders"
   },
   "bugs": {
-    "url": "https://github.com/gkjohnson/urdf-loaders/issues"
+    "url": "https://gitlab.com/skyllatech/jetstream/urdf-loaders"
   },
-  "homepage": "https://github.com/gkjohnson/urdf-loaders#readme",
+  "homepage": "https://gitlab.com/skyllatech/jetstream/urdf-loaders#readme",
   "keywords": [
     "javascript",
     "threejs",

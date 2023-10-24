@@ -1,6 +1,6 @@
 {
   "name": "@jetstream/urdf-loader-js",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "URDF Loader for THREE.js and webcomponent viewer",
   "main": "src/URDFLoader.js",
   "type": "module",

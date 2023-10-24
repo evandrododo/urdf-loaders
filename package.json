@@ -9,7 +9,8 @@
     "build": "rollup -c",
     "build-examples": "parcel build ./example/*.html --out-dir ./example/bundle/ --public-url . --no-cache --no-source-maps --no-content-hash",
     "test": "jest",
-    "lint": "eslint \"./src/*.js\" \"./test/*.js\" && tsc -p tsconfig.json --noEmit"
+    "lint": "eslint \"./src/*.js\" \"./test/*.js\" && tsc -p tsconfig.json --noEmit",
+    "prepublishOnly": "npm run build"
   },
   "files": [
     "src/*",
@@ -53,9 +54,7 @@
     "parcel-bundler": "^1.12.5",
     "static-server": "^3.0.0",
     "three": "^0.152.2",
-    "typescript": "^3.9.7"
-  },
-  "dependencies": {
+    "typescript": "^3.9.7",
     "rollup": "^2.29.0"
   }
 }

@@ -35,9 +35,6 @@
     "urdf-models",
     "webcomponents"
   ],
-  "peerDependencies": {
-    "three": ">=0.152.0"
-  },
   "devDependencies": {
     "@babel/core": "^7.21.8",
     "@babel/preset-env": "^7.21.5",

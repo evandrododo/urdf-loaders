@@ -566,6 +566,8 @@
             const manager = this.manager;
             const linkMap = {};
             const jointMap = {};
+            const gazeboMap = {};
+            const gazeboArray = [];
             const materialMap = {};
 
             // Resolves the path of mesh files
@@ -684,10 +686,37 @@
 
                 });
 
+                // Process the <gazebo> tags
+                gazebos.forEach(g => {
+
+                    const link = linkMap[g.getAttribute('reference')];
+                    // get joint who have the link as a child
+                    const jointName = joints
+                      .find(
+                        j => j.querySelector(`child[link="${g.getAttribute('reference')}"]`) !== null
+                      )
+                      ?.getAttribute('name');
+                    
+                    const joint = jointMap[jointName];
+
+                    const sensor = g.querySelector('sensor');
+
+                    // const name = g.getAttribute('name') || g.getAttribute('reference');
+                    const processedGazebo =
+                    processGazebo(g, joint, sensor, link);
+                    // In other properties they are using the name as the key
+                    // if(name) {
+                    //   gazeboMap[name]= processedGazebo;
+                    // }
+                    gazeboArray.push(processedGazebo);
+
+                });
+
                 obj.joints = jointMap;
                 obj.links = linkMap;
                 obj.colliders = colliderMap;
                 obj.visual = visualMap;
+                obj.gazebos = gazeboArray;
 
                 // Link up mimic joints
                 const jointList = Object.values(jointMap);
@@ -872,6 +901,22 @@
 
                 return target;
 
+            }
+
+            // Process the <gazebo> nodes
+            function processGazebo(gazebo, joint, sensor, link) {
+                const obj = {
+                  //   name: gazebo.getAttribute('name') || gazebo.getAttribute('reference'),
+                  joint: joint,
+                  link: link,
+                  sensor: {
+                    name: sensor?.getAttribute('name'),
+                    type: sensor?.getAttribute('type'),
+                    udrfNode: sensor,
+                  },
+                  urdfNode: gazebo,
+                };
+                return obj;
             }
 
             function processMaterial(node) {
